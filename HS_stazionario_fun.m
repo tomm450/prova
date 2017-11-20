@@ -12,7 +12,7 @@ n = 160;
 % xp = naca.air(dummy,1)';
 % yp = naca.air(dummy,2)';
 
-native = load('./native.txt');
+native = load('./nativeNACA0012.txt');
 
 fig1 = figure(1);
 plot(xp,yp,'bo-'); 
@@ -27,7 +27,7 @@ Npt  = length(xp);
 Npan = length(xp)-1; % numero pannelli
 
 alpha_v = [-2.5:0.5:2.5];
-alpha_v = [5,6]
+
 U_mag   = 135;
 
 iter_number = 5000;
@@ -37,10 +37,6 @@ DCpHS    = nan(size(alpha_v,2),1);
 DCpFoil  = nan(size(alpha_v,2),1); 
 DCpFoilv  = nan(size(alpha_v,2),1); 
 DCpFoilor = nan(size(alpha_v,2),1); 
-
-
-
-
 
 for av = 1:size(alpha_v,2)
 
@@ -62,17 +58,34 @@ end
 
 % [pol,foil] = xfoil2matlab(coord,alpha,Re,Mach,varargin)
 [polo,foilo] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000);
-
 [pol,foil]   = xfoil2matlab([xc;yc],alpha_v,0,0,5000);
 [polv,foilv] = xfoil2matlab([xc;yc],alpha_v,9000000,0,1000);
 
 
+
 for k = 1:size(alpha_v,2)
+    
+    n   = size(xc,2)/2;
+    ncp = size(foilv.xcp,1)/2;
+    % reinterpolo
+    foilv.cpI(:,k) = [spline(foilv.xcp(1:ncp),foilv.cp(1:ncp,k),xc(1:n)),...;
+                     spline(foilv.xcp(ncp+1:end),foilv.cp(ncp+1:end,k),xc(n+1:end))];
+    
+    foilo.cpI(:,k) = [spline(foilo.xcp(1:ncp),foilo.cp(1:ncp,k),xc(1:n)),...;
+                     spline(foilo.xcp(ncp+1:end),foilo.cp(ncp+1:end,k),xc(n+1:end))];
+    
+    foil.cpI(:,k) = [spline(foil.xcp(1:ncp),foil.cp(1:ncp,k),xc(1:n)),...;
+                     spline(foil.xcp(ncp+1:end),foil.cp(ncp+1:end,k),xc(n+1:end))];
+                 
+                 
+                 
+ 
+    
     figure(k+1);
-    plot(foilv.xcp,foilv.cp(:,k),'go-')
+    plot(xc,foilv.cpI(:,k),'go-')
     hold on
-    plot(foilo.xcp,foilo.cp(:,k),'co-')
-    plot(foil.xcp,foil.cp(:,k),'bo-')
+    plot(xc,foilo.cpI(:,k),'co-')
+    plot(xc,foil.cpI(:,k),'bo-')
     plot(xc,cp(k,:),'ro-')
     grid on;
     set(gca,'YDir','Reverse'); % reverse y axis

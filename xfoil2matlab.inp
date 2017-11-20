@@ -1,0 +1,22 @@
+load /home/tom/Desktop/gittry/prova/xfoil2matlab.foil
+
+
+pane
+
+
+oper
+re 9e+06
+mach 0
+iter 1000
+visc
+pacc
+
+
+alfa 4
+dump xfoil2matlab_a04.000_dump.dat
+cpwr xfoil2matlab_a04.000_cpwr.dat
+pwrt
+xfoil2matlab_pwrt.dat
+plis
+
+quit

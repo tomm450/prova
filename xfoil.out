@@ -1,0 +1,170 @@
+
+ ===================================================
+  XFOIL Version 6.99
+  Copyright (C) 2000   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+  Caveat computor
+ ===================================================
+
+ File  xfoil.def  not found
+
+   QUIT    Exit program
+
+  .OPER    Direct operating point(s)
+  .MDES    Complex mapping design routine
+  .QDES    Surface speed design routine
+  .GDES    Geometry design routine
+
+   SAVE f  Write airfoil to labeled coordinate file
+   PSAV f  Write airfoil to plain coordinate file
+   ISAV f  Write airfoil to ISES coordinate file
+   MSAV f  Write airfoil to MSES coordinate file
+   REVE    Reverse written-airfoil node ordering
+   DELI i  Change written-airfoil file delimiters
+
+   LOAD f  Read buffer airfoil from coordinate file
+   NACA i  Set NACA 4,5-digit airfoil and buffer airfoil
+   INTE    Set buffer airfoil by interpolating two airfoils
+   NORM    Buffer airfoil normalization toggle
+   HALF    Halve the number of points in buffer airfoil
+   XYCM rr Change CM reference location, currently  0.25000 0.00000
+
+   BEND    Display structural properties of current airfoil
+
+   PCOP    Set current-airfoil panel nodes directly from buffer airfoil points
+   PANE    Set current-airfoil panel nodes ( 160 ) based on curvature
+  .PPAR    Show/change paneling
+
+  .PLOP    Plotting options
+
+   WDEF f  Write  current-settings file
+   RDEF f  Reread current-settings file
+   NAME s  Specify new airfoil name
+   NINC    Increment name version number
+
+   Z       Zoom    | (available in all menus)
+   U       Unzoom  | 
+
+ XFOIL   c>  
+ Labeled airfoil file.  Name:  xfoil2matlab                                    
+
+ Number of input coordinate points: 318
+ Counterclockwise ordering
+ Max thickness =     0.120000  at x =   0.298
+ Max camber    =     0.000000  at x =   0.049
+
+  LE  x,y  =   0.00003   0.00000  |   Chord =   0.99992
+  TE  x,y  =   0.99995   0.00000  |
+
+ Current airfoil nodes set from buffer airfoil nodes ( 318 )
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+ Sharp trailing edge
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+ M  =    0.0000
+ Re =  0.9000E+07
+
+.OPERv   c>  
+ Polar  1 newly created for accumulation
+ Airfoil archived with polar: xfoil2matlab                                    
+
+Enter  polar save filename  OR  <return> for no file   s>  
+ Polar save file will NOT be written
+
+Enter  polar dump filename  OR  <return> for no file   s>  
+ Polar dump file will NOT be written
+
+ Polar accumulation enabled
+
+.OPERva   c>   Calculating unit vorticity distributions ...
+ Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Initializing BL ...
+    side            1  ...
+ MRCHUE: Inverse mode at  87     Hk =   2.500
+    side            2  ...
+ MRCHUE: Inverse mode at  54     Hk =   5.164
+ MRCHUE: Inverse mode at  55     Hk =   2.500
+
+ Side 1  free  transition at x/c =  0.0791   29
+ Side 2  free  transition at x/c =  0.6678   54
+
+   1   rms: 0.1622E+00   max: -.1994E+01   D at   55  2   RLX: 0.251
+       a =  4.000      CL =  0.4749
+      Cm = -0.0057     CD =  0.00530   =>   CDf =  0.00454    CDp =  0.00076
+
+ Side 1  free  transition at x/c =  0.0816   29
+ Side 2  free  transition at x/c =  0.6716   54
+
+   2   rms: 0.1192E+00   max: -.1425E+01   D at   55  2   RLX: 0.351
+       a =  4.000      CL =  0.4557
+      Cm = -0.0013     CD =  0.00541   =>   CDf =  0.00451    CDp =  0.00090
+
+ Side 1  free  transition at x/c =  0.0832   29
+ Side 2  free  transition at x/c =  0.6739   54
+
+   3   rms: 0.7106E-01   max: -.8048E+00   D at   55  2   RLX: 0.621
+       a =  4.000      CL =  0.4347
+      Cm =  0.0034     CD =  0.00559   =>   CDf =  0.00449    CDp =  0.00110
+
+ Side 1  free  transition at x/c =  0.0851   30
+ Side 2  free  transition at x/c =  0.6801   55
+
+   4   rms: 0.2466E-01   max: -.2156E+00   T at   55  2
+       a =  4.000      CL =  0.4210
+      Cm =  0.0065     CD =  0.00570   =>   CDf =  0.00447    CDp =  0.00123
+
+ Side 1  free  transition at x/c =  0.0913   30
+ Side 2  free  transition at x/c =  0.6787   54
+
+   5   rms: 0.2679E-02   max: 0.3517E-01   C at   30  1
+       a =  4.000      CL =  0.4205
+      Cm =  0.0066     CD =  0.00569   =>   CDf =  0.00445    CDp =  0.00125
+
+ Side 1  free  transition at x/c =  0.0907   30
+ Side 2  free  transition at x/c =  0.6787   54
+
+   6   rms: 0.2440E-04   max: -.2420E-03   D at   30  1
+       a =  4.000      CL =  0.4205
+      Cm =  0.0066     CD =  0.00569   =>   CDf =  0.00445    CDp =  0.00124
+      9.000    2.8987   0.005694   0.000000   0.000000   0.000000    0.0907     #
+
+ Point added to stored polar  1
+ Save file unspecified or not available
+ Dump file unspecified or not available
+
+.OPERva   c>  
+.OPERva   c>  
+.OPERva   c>  
+        airfoil                    Re           Mach       NcritT  NcritB  XtripT  XtripB       file
+       ------------------------  ------------  ----------  ------  ------  ------  ------    -------------------
+ >  1  xfoil2matlab              9.000e6       0.000         9.00    9.00   1.000   1.000    
+
+Enter polar output filename   s>  
+ Output file exists.  Overwrite?  Y
+
+.OPERva   c>  
+ XFOIL   c>  

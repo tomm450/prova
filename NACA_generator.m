@@ -1,43 +1,43 @@
 function [xx,yy] = NACA_generator(NACA,N,varargin )
-%NACA_Airfoil: Obtains the characteristic for a NACA 4-digit and 5-digit
+%NACA_Airfoil: Obtains the characteristic for a NACA 4-digit and 5-digit 
 %               series and plot the shape.
-%
+%               
 %           Ex. [xx,yy] = NACA_generator( NACA,N,option)
-%
-%               Where the first inpute is the NACA followed by a 4 or 5
-%               number digit as a string, NACAXXXX. The second input the number of
-%               points to plot the airfoil. The options are optional
-%
+%               
+%               Where the first inpute is the NACA followed by a 4 or 5 
+%               number digit as a string, NACAXXXX. The second input the number of 
+%               points to plot the airfoil. The options are optional 
+% 
 %               first option  | interp          | 'linear' (default) or
-%               'cos'
+%               'cos' 
 %               second option | plot | 1 (default), 0
-%
+% 
 % Ex:
 %   NACA_Airfoil( 'NACA0012',30,'cos',1 )
 % is a NACA 0012 evaluated in 30 points along x with cos method. The
 % airfoil is plotted
-%
+% 
 % ------------------------------------------------------------------------
 % Author: Andrea Fani
 % Date created: 08/12/2016
 
-%
+% 
 
 %% Error
 L = length(NACA);
 
 %% Extract data
 if L == 8
-    % 4-digit NACA airfoil
-    m = str2double(NACA(5))/100; % maximun chamber
-    p = str2double(NACA(6))/10; % maximun chamber along the cord
-    t = str2double(NACA(7:8))/100; % max thickness
+% 4-digit NACA airfoil
+m = str2double(NACA(5))/100; % maximun chamber
+p = str2double(NACA(6))/10; % maximun chamber along the cord
+t = str2double(NACA(7:8))/100; % max thickness
 elseif L == 9
-    % 5-digit NACA airfoil
-    cl = str2double(NACA(5))*3/20; % design coefficeint of lift
-    p = str2double(NACA(6))/20; % position of maximun chamber
-    q = str2double(NACA(7)); % check if it is a reflex camber
-    t = str2double(NACA(8:9))/100; % max thickness
+% 5-digit NACA airfoil
+cl = str2double(NACA(5))*3/20; % design coefficeint of lift
+p = str2double(NACA(6))/20; % position of maximun chamber
+q = str2double(NACA(7)); % check if it is a reflex camber
+t = str2double(NACA(8:9))/100; % max thickness
 end
 
 
@@ -61,7 +61,7 @@ switch lower(xint)
         x=linspace(0,1,N);
     case 'cos'
         x=0.5*(1-cos(pi*linspace(0,1,N)));
-    otherwise
+    otherwise 
         error('xint must be linear or cos')
 end
 %% Shape of mean camber
@@ -91,13 +91,25 @@ y_L = (yc - yt.*cos(zeta));
 xx=[x_L(end:-1:1),x_U(2:end)];
 yy=[y_L(end:-1:1),y_U(2:end)];
 
+%% Plot
+if PL == 1
+figure;
+plot(x_U,y_U,'bx-','LineWidth',2); hold on
+plot(x_L,y_L,'bx-','LineWidth',2);
+title([NACA(1:4) ' ' NACA(5:end)])
 
+% domain
+% xmin = -.1;
+% xmax = c*.1+c;
+% ymin = -2*max(Upper(:,2));
+% ymax = 2*max(Upper(:,2));
+
+% axis([xmin xmax ymin ymax])
+axis equal
+end
 end
 
-%****************************************************************************%
-% subfunction
-
-% Compute the camber for different airfoils
+%% Compute the camber for different airfoils
 function [yc,zeta] = camber(naca,p,x,N,varargin)
 I = find(x > p,1);
 yc = zeros(1,N);
@@ -113,8 +125,8 @@ if strcmp(naca,'4digit') % 4-digit equation
         dyc_dx(I+1:end) = (2*m/(1-p)^2)*(p-x(I+1:end));
     end
     
-elseif strcmp(naca,'5digit')  % 5-digit equation
-    q  = varargin{1};
+elseif strcmp(naca,'5digit')  % 5-digit equation 
+    q = varargin{1};
     cl = varargin{2};
     
     if q == 0 % Not reflex
@@ -141,29 +153,29 @@ elseif strcmp(naca,'5digit')  % 5-digit equation
     
 end
 
-if dyc_dx ~= zeros(1,N)
+if dyc_dx ~= zeros(1,N);
     zeta = atan(dyc_dx);
 else
     zeta = 0;
 end
 end
 
-% get the constanst for different airfoil
+%% get the constanst for different airfoil
 function [m,k1,k2] = constants(p,q,cl)
 
 if q == 0 && nargout == 2
     A = [.05 0.0580 361.400 ;
-        .10 .1260  51.640 ;
-        .15 .2025  15.957 ;
-        .20 .2900  6.643  ;
-        .25 .3910  3.230] ;
-    
-    I = find(p == A(:,1),1);
-    
+         .10 .1260  51.640 ;
+         .15 .2025  15.957 ;
+         .20 .2900  6.643  ;
+         .25 .3910  3.230] ;
+     
+     I = find(p == A(:,1),1);
+
     if isempty(I)
         i = round(I/5);
         A1 = A(i,:);
-        
+
         m = (p/A1(1))*A1(2);
         k1 = (p/A1(1))*A1(3);
     else
@@ -172,16 +184,16 @@ if q == 0 && nargout == 2
     end
 elseif q == 1 && nargout == 3
     A = [.10 .1300 51.990 .000764;
-        .15 .2170 15.793 .00677;
-        .20 .3180 6.520  .0303;
-        .25 .4410 3.191  .1355];
-    
-    I = find(p == A(:,1),1);
-    
+         .15 .2170 15.793 .00677;
+         .20 .3180 6.520  .0303;
+         .25 .4410 3.191  .1355];
+     
+     I = find(p == A(:,1),1);
+
     if isempty(I)
         i = round(I/5);
         A1 = A(i,:);
-        
+
         m = (p/A1(1))*A1(2);
         k1 = (p/A1(1))*A1(3);
     else
@@ -191,7 +203,7 @@ elseif q == 1 && nargout == 3
     end
 end
 
-% scaling
+% scaling 
 if cl ~= .3 && nargout == 2
     m = m*cl/.3;
     k1 = k1*cl/.3;
