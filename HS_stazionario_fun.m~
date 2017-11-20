@@ -5,21 +5,15 @@ close all;
 %% Definizione profilo
 
 naca = 'NACA0012';
-n = 160;
+n = 100;
 [xp,yp] = NACA_generator(naca,n,'cos',0); 
 % naca = load('64212.mat');
 % dummy = size(naca.air,1); dummy = [1,ceil(linspace(2,dummy-1,n*2-3)),dummy];
 % xp = naca.air(dummy,1)';
 % yp = naca.air(dummy,2)';
 
-native = load('./native.txt');
-
 fig1 = figure(1);
-plot(xp,yp,'bo-'); 
-title('Airfoil'); grid on; hold on;
-plot(native(:,1),native(:,2),'go-');
-legend('NACA gen','NACA xfoil');
-
+plot(xp,yp); title('Airfoil'); grid on;
 
 pan = [xp;yp];
 
@@ -35,8 +29,8 @@ iter_number = 5000;
 cp  = nan(size(alpha_v,2),Npan);
 DCpHS    = nan(size(alpha_v,2),1); 
 DCpFoil  = nan(size(alpha_v,2),1); 
-DCpFoilv  = nan(size(alpha_v,2),1); 
-DCpFoilor = nan(size(alpha_v,2),1); 
+DCpFoilv = nan(size(alpha_v,2),1); 
+
 
 
 
@@ -58,34 +52,53 @@ cp(av,:) = (1-(u_pert./norm(U_inf)).^2)';
 
 DCpHS(av)  = min(cp(av,:) - cp(av,1));
 
+DCpFoil(av)  = min(foil.cp(:,av) - foil.cp(1,av));
+DCpFoilv(av) = min(foilv.cp(:,av) - foilv.cp(1,av));
+
+
 end
 
 % [pol,foil] = xfoil2matlab(coord,alpha,Re,Mach,varargin)
-[polo,foilo] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000);
-
-[pol,foil]   = xfoil2matlab([xc;yc],alpha_v,0,0,5000);
-[polv,foilv] = xfoil2matlab([xc;yc],alpha_v,9000000,0,1000);
-
+[pol,foil] = xfoil2matlab([xc;yc],alpha_v,0,0,5000);
+[polv,foilv] = xfoil2matlab([xc;yc],alpha_v,9000000,0,5000);
 
 for k = 1:size(alpha_v,2)
     figure(k+1);
     plot(foilv.xcp,foilv.cp(:,k),'go-')
     hold on
-    plot(foilo.xcp,foilo.cp(:,k),'co-')
     plot(foil.xcp,foil.cp(:,k),'bo-')
     plot(xc,cp(k,:),'ro-')
     grid on;
     set(gca,'YDir','Reverse'); % reverse y axis
-    alfa=num2str(alpha_v(av)*180/pi);
+    alfa=num2str(alpha*180/pi);
     tit1 = 'COEFFICIENTE DI PRESSIONE';
     tit2 = ['Incidenza: ',alfa, ' gradi'];
     title({tit1;tit2})
-    legend('xfoil_v','native coordinates','xfoil_i','HS')
+    legend('xfoil_v','xfoil_i','HS')
     xlabel('corda');
     ylabel('-C_p');
-    
-    DCpFoil(av)  = min(foil.cp(:,av) - foil.cp(1,av));
-    DCpFoilv(av) = min(foilv.cp(:,av) - foilv.cp(1,av));
-
 end
 
+% % % 
+% % % figure(av*3 -2)
+% % % axis equal
+% % % hold on
+% % % plot(xp,yp,'Color',[0 0.5 1],'LineWidth',2);
+% % % plot(xc,yc,'xr','LineWidth',2);
+% % % 
+% % % figure(3*av-1)
+% % % n = length(xc)/2; 
+% % % hold on
+% % % plot(xc(1:n),cp(1:n),'Color',[0 0.5 1],'LineWidth',2);
+% % % plot(xc(n:end),cp(n:end),'Color',[1 0.5 0],'LineWidth',2);
+% % % grid on
+% % % set(gca,'YDir','Reverse'); % reverse y axis
+% % % alfa=num2str(alpha*180/pi);
+% % % tit1 = 'COEFFICIENTE DI PRESSIONE';
+% % % tit2 = ['Incidenza: ',alfa, ' gradi'];
+% % % title({tit1;tit2})
+% % % legend('dwn','up')
+% % % xlabel('corda');
+% % % ylabel('-C_p');
+% % % 
+% % % %plot(alpha_v,abs(DCp))
