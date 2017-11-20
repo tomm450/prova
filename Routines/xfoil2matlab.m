@@ -1,5 +1,5 @@
 %% XFOIL
-function [pol,foil] = xfoil2matlab(coord,alpha,Re,Mach,iter,varargin)
+function [pol,foil] = xfoil2matlab(coord,alpha,Re,Mach,iter,xfoil_cmd,varargin)
 % from Mathworks, modified for suit the case
 
 % Run XFoil and return the results.
@@ -161,7 +161,9 @@ else
     
     % execute xfoil
     %cmd = sprintf('cd %s && xfoil.exe < xfoil.inp > xfoil.out',wd);
-    cmd = sprintf('cd %s && /home/tom/Downloads/Xfoil/bin/xfoil < xfoil2matlab.inp > xfoil.out',wd);
+    
+       
+    cmd = sprintf('cd %s && %s < xfoil2matlab.inp > xfoil.out',wd,xfoil_cmd);
     
     [status,result] = system(cmd);
     if (status~=0),
