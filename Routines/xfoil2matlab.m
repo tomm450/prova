@@ -276,5 +276,5 @@ else
     
     
 end;
-system('rm *.bl *.inp *.foil xfoil.out xfoil2matlab_pwrt.dat');
+
 end

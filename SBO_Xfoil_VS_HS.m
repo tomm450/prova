@@ -1,8 +1,9 @@
 clc
 clear all;
 close all;
-%% Definizione profilo
 
+addpath('./Routines');
+%% Definizione profilo
 naca = 'NACA0012';
 n = 160;
 [xp,yp] = NACA_generator(naca,n,'cos',0);
@@ -46,9 +47,9 @@ for i = 1:SBOiter_max
     
     % copt
     x(i) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta')),[14],[],[],[],[],10,20,[],options);
-        
+       
     temp_fig = gcf;
-    savefig(temp_fig,strcat(num2str(i),'opt.fig'));
+    savefig(temp_fig,strcat('./Output/',num2str(i),'opt.fig'));
     close gcf
     
     fc{i} = pdistr(x(i),U_mag,xp,yp,'all');
@@ -67,7 +68,7 @@ for i = 1:SBOiter_max
     xlabel('corda');
     ylabel('-C_p');
     
-    title(sprintf('alpha = %1.1f deg',x(i));
+    title(sprintf('alpha = %1.1f deg',x(i)));
     
     subplot(1,2,2)
     plot(xc,ff{i}{2}-fc{i}{2},'go-')
@@ -75,13 +76,16 @@ for i = 1:SBOiter_max
     xlabel('corda');
     ylabel('| DC_p |');
     title('f-c_{opt}')
-     
+    
+    temp_fig = gcf;
+    savefig(temp_fig,strcat('./Output/',num2str(i),'comp.fig'));
+    close gcf
+    
 end
 
-
-
     
-%%
+%% SUBROUTINE
+
 function f = pdistr(alpha_degr,U_mag,xp,yp,wtd)
 
 alpha = alpha_degr*pi/180; % incidenza profilo
@@ -108,8 +112,11 @@ end
 
 end
 
-function f = xfoil_distr(alpha_v,xc,wtd)
+function f = xfoil_distr(alpha_v,xc,wtd,case_number)
 
+if nargin == 3
+   case_number = 1;
+end
 [~,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000);
 
 n   = size(xc,2)/2;
@@ -131,4 +138,15 @@ switch wtd
         error('error')
 end
 
+% pulizia
+d1 = system(sprintf...
+    ('mv ./Routines/:00.bl ./Output/%d.bl',case_number));
+d2 = system(sprintf...
+    ('mv ./Routines/xfoil2matlab.inp ./Output/%d.inp',case_number));
+d3 = system(sprintf...
+    ('mv ./Routines/xfoil2matlab_pwrt.dat ./Output/%d.dat',case_number));
+d4 = system(sprintf...
+    ('mv ./Routines/xfoil.out ./Output/%d.out',case_number));
+
 end
+
