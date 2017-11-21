@@ -48,7 +48,6 @@ options = optimoptions(options,'StepTolerance',        0.01);
 options = optimoptions(options,'PlotFcn', {  @optimplotx @optimplotfunccount @optimplotfval @optimplotstepsize @optimplotfirstorderopt });
 %options = optimoptions(options,'ConstraintTolerance',  0.01);
 
-
 fvals_c = {};
 fvals_f = {};
 Skf     = {};
@@ -257,6 +256,13 @@ legend(leg_cell)
 
 savefig(f100,'./Output/evo.fig');
 
+f101 = figure(101);
+plot(x,'o--');
+grid on
+title('Alpha opt');
+xlabel('Iteration');
+ylabel('Alpha [deg]');
+savefig(f101,'./Output/alpha_conv.fig');
 
 %% SUBROUTINE
 
