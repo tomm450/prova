@@ -5,11 +5,12 @@ close all;
 addpath('./Routines');
 %% Definizione profilo
 
-%xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
-xfoil_cmd = 'xfoil';                               %fisso
+xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
+%xfoil_cmd = 'xfoil';                               %fisso
 
 naca = 'NACA0012';
 n = 160;
+
 [xp,yp] = NACA_generator(naca,n,'cos',0);
 
 % naca = load('64212.mat');
