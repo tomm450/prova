@@ -1,0 +1,29 @@
+naca 0012
+gdes
+flap
+0.80
+0
+10
+exec
+
+
+
+pane
+
+
+oper
+re 9e+06
+mach 0
+iter 1000
+visc
+pacc
+
+
+alfa 14.8247
+dump xfoil2matlab_a14.825_dump.dat
+cpwr xfoil2matlab_a14.825_cpwr.dat
+pwrt
+xfoil2matlab_pwrt.dat
+plis
+
+quit

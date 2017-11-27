@@ -111,7 +111,6 @@ x_L = (x + yt.*sin(zeta));
 y_U = (yc + yt.*cos(zeta));
 y_L = (yc - yt.*cos(zeta));
 
-
 if size(flap_info,2)>0
     
     % porzione "buona"
@@ -131,7 +130,7 @@ if size(flap_info,2)>0
          
     
     jumpO = x(imin) - x(imin-1);
-    jumpL = flap_info(1)+RL(1,1) - x_Lt(end)
+    jumpL = flap_info(1)+RL(1,1) - x_Lt(end);
     trim = 0;
     
     while jumpL <= 0.5*jumpO
@@ -142,7 +141,7 @@ if size(flap_info,2)>0
        x_Ut = x_Ut(1:end-trim);
        y_Ut = y_Ut(1:end-trim);
        
-       jumpL = flap_info(1)+RL(1,1) - x_Lt(end)
+       jumpL = flap_info(1)+RL(1,1) - x_Lt(end);
      
     end
     
@@ -155,11 +154,6 @@ end
   
 xx=[x_L(end:-1:1),x_U(2:end)];
 yy=[y_L(end:-1:1),y_U(2:end)];
-
-
-
-
-
 
 %% Plot
 if PLT == 1

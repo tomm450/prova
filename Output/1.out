@@ -1,0 +1,223 @@
+
+ ===================================================
+  XFOIL Version 6.99
+  Copyright (C) 2000   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+  Caveat computor
+ ===================================================
+
+ File  xfoil.def  not found
+
+   QUIT    Exit program
+
+  .OPER    Direct operating point(s)
+  .MDES    Complex mapping design routine
+  .QDES    Surface speed design routine
+  .GDES    Geometry design routine
+
+   SAVE f  Write airfoil to labeled coordinate file
+   PSAV f  Write airfoil to plain coordinate file
+   ISAV f  Write airfoil to ISES coordinate file
+   MSAV f  Write airfoil to MSES coordinate file
+   REVE    Reverse written-airfoil node ordering
+   DELI i  Change written-airfoil file delimiters
+
+   LOAD f  Read buffer airfoil from coordinate file
+   NACA i  Set NACA 4,5-digit airfoil and buffer airfoil
+   INTE    Set buffer airfoil by interpolating two airfoils
+   NORM    Buffer airfoil normalization toggle
+   HALF    Halve the number of points in buffer airfoil
+   XYCM rr Change CM reference location, currently  0.25000 0.00000
+
+   BEND    Display structural properties of current airfoil
+
+   PCOP    Set current-airfoil panel nodes directly from buffer airfoil points
+   PANE    Set current-airfoil panel nodes ( 160 ) based on curvature
+  .PPAR    Show/change paneling
+
+  .PLOP    Plotting options
+
+   WDEF f  Write  current-settings file
+   RDEF f  Reread current-settings file
+   NAME s  Specify new airfoil name
+   NINC    Increment name version number
+
+   Z       Zoom    | (available in all menus)
+   U       Unzoom  | 
+
+ XFOIL   c>   Max thickness =     0.120032  at x =   0.297
+ Max camber    =    -0.000000  at x =   0.018
+
+ Buffer airfoil set using 245 points
+
+ Blunt trailing edge.  Gap =  0.00252
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ You are working with the buffer airfoil
+
+.GDES   c>  
+Enter flap hinge x location   r>  
+  Top    surface:  y =  0.0262     y/t = 1.0
+  Bottom surface:  y = -0.0262     y/t = 0.0
+
+Enter flap hinge y location (or 999 to specify y/t)   r>  
+ Flap hinge: x,y =  0.80000  0.00000
+
+Enter flap deflection in degrees (+ down)   r>  
+ Top breaks: x,y =    0.80288  0.02591      0.80288  0.02591
+ Bot breaks: x,y =    0.80061 -0.02616      0.80515 -0.02566
+ Max thickness =     0.120108  at x =   0.302
+ Max camber    =     0.027718  at x =   0.802
+
+.GDES   c>  
+ Current airfoil nodes set from buffer airfoil nodes ( 247 )
+
+.GDES   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+ Blunt trailing edge.  Gap =  0.00252
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+ M  =    0.0000
+ Re =  0.9000E+07
+
+.OPERv   c>  
+ Polar  1 newly created for accumulation
+ Airfoil archived with polar: NACA 0012                                       
+
+Enter  polar save filename  OR  <return> for no file   s>  
+ Polar save file will NOT be written
+
+Enter  polar dump filename  OR  <return> for no file   s>  
+ Polar dump file will NOT be written
+
+ Polar accumulation enabled
+
+.OPERva   c>   Calculating unit vorticity distributions ...
+ Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Initializing BL ...
+    side            1  ...
+ MRCHUE: Inverse mode at  26     Hk =   7.753
+ MRCHUE: Inverse mode at  27     Hk =   2.500
+ MRCHUE: Inverse mode at  95     Hk =   2.500
+ MRCHUE: Inverse mode at  96     Hk =   2.500
+ MRCHUE: Inverse mode at  97     Hk =   2.500
+ MRCHUE: Inverse mode at  98     Hk =   2.500
+ MRCHUE: Convergence failed at  99  side 1    Res =  0.1423E+02
+    side            2  ...
+ MRCHUE: Inverse mode at  44     Hk =   5.701
+ MRCHUE: Inverse mode at  45     Hk =   7.972
+ MRCHUE: Inverse mode at  46     Hk =   2.500
+
+ MRCHDU: Convergence failed at  99  side 1    Res =  0.1087E+02
+ Side 1  free  transition at x/c =  0.0054   27
+ Side 2  free  transition at x/c =  0.7678   46
+
+   1   rms: 0.3818E+00   max: 0.1740E+01   D at   66  2   RLX: 0.317
+       a = 12.353      CL =  2.0729
+      Cm = -0.1255     CD =  0.00838   =>   CDf =  0.00536    CDp =  0.00302
+
+ Side 1  free  transition at x/c =  0.0057   27
+ Side 2  free  transition at x/c =  0.7739   46
+
+   2   rms: 0.2424E+00   max: 0.1016E+01   D at   69  2   RLX: 0.781
+       a = 12.353      CL =  1.9412
+      Cm = -0.0983     CD =  0.01324   =>   CDf =  0.00535    CDp =  0.00788
+
+ Side 1  free  transition at x/c =  0.0075   28
+ Side 2  free  transition at x/c =  0.7809   47
+
+   3   rms: 0.9350E-01   max: 0.3021E+00   D at   65  2
+       a = 12.353      CL =  1.8343
+      Cm = -0.0760     CD =  0.01643   =>   CDf =  0.00553    CDp =  0.01089
+
+ Side 1  free  transition at x/c =  0.0080   27
+ Side 2  free  transition at x/c =  0.7823   48
+
+   4   rms: 0.4017E-01   max: 0.2059E+00   D at   98  1
+       a = 12.353      CL =  1.7977
+      Cm = -0.0686     CD =  0.01658   =>   CDf =  0.00511    CDp =  0.01147
+
+ Side 1  free  transition at x/c =  0.0079   27
+ Side 2  free  transition at x/c =  0.7825   48
+
+   5   rms: 0.1502E-01   max: -.8410E-01   D at   73  2
+       a = 12.353      CL =  1.8095
+      Cm = -0.0712     CD =  0.01666   =>   CDf =  0.00508    CDp =  0.01157
+
+ Side 1  free  transition at x/c =  0.0079   27
+ Side 2  free  transition at x/c =  0.7824   48
+
+   6   rms: 0.6035E-03   max: -.7158E-02   D at   73  2
+       a = 12.353      CL =  1.8095
+      Cm = -0.0712     CD =  0.01667   =>   CDf =  0.00509    CDp =  0.01158
+
+ Side 1  free  transition at x/c =  0.0079   27
+ Side 2  free  transition at x/c =  0.7824   48
+
+   7   rms: 0.3067E-05   max: -.3945E-04   D at   73  2
+       a = 12.353      CL =  1.8095
+      Cm = -0.0712     CD =  0.01667   =>   CDf =  0.00509    CDp =  0.01158
+      9.000    4.3163   0.016673   0.000421   0.000448   0.000027    0.0079     #
+
+ Point added to stored polar  1
+ Save file unspecified or not available
+ Dump file unspecified or not available
+
+.OPERva   c>  
+.OPERva   c>  
+.OPERva   c>  
+        airfoil                    Re           Mach       NcritT  NcritB  XtripT  XtripB       file
+       ------------------------  ------------  ----------  ------  ------  ------  ------    -------------------
+ >  1  NACA 0012                 9.000e6       0.000         9.00    9.00   1.000   1.000    
+
+Enter polar output filename   s>  
+.OPERva   c>  
+ ==============================================================
+ Polar  1
+  
+       XFOIL         Version 6.99
+  
+ Calculated polar for: NACA 0012                                       
+  
+ 1 1 Reynolds number fixed          Mach number fixed         
+  
+ xtrf =   1.000 (top)        1.000 (bottom)  
+ Mach =   0.000     Re =     9.000 e 6     Ncrit =   9.000  9.000
+  
+   alpha    CL        CD       CDp       CM     Top_Xtr  Bot_Xtr  Top_Itr  Bot_Itr
+  ------ -------- --------- --------- -------- -------- -------- -------- --------
+  12.353   1.8095   0.01667   0.00498  -0.0712   0.0079   0.7824  72.2265 143.3789
+
+.OPERva   c>  
+ XFOIL   c>  
