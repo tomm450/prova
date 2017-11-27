@@ -148,6 +148,5 @@ Uv = -gamma.*(dt)/(2*pi);
 Vv = -gamma./(2*pi)*log(norm(r2)/norm(r1));
 end
 
-%% NACA GEN
 
 

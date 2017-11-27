@@ -40,20 +40,29 @@ q = str2double(NACA(7)); % check if it is a reflex camber
 t = str2double(NACA(8:9))/100; % max thickness
 end
 
-
 % Checks for trailing edge close or open and if it wants to be ploted
 if ~isempty(varargin)
-    xint = varargin{1};
-    if length(varargin) == 2
-        PL = varargin{2};
-    elseif length(varargin) > 2
+    xint = varargin{1};                 % varagin non vuoto
+    if length(varargin) == 2            
+        
+        PLT = varargin{2};              % due input, flap_info non esite
+        flap_info = [];
+    
+    elseif length(varargin) == 3    
+        PLT = varargin{2};
+        flap_info = varargin{3};        % tre input, ho tutto
+    
+    elseif length(varargin) > 3         % errore negli input
         error('Too many input arguments')
+    
     else
-        PL = 1;
+        PLT = 1;
+        flap_info = [];    
     end
 else
     xint='linear';
-    PL = 1;
+    PLT = 1;
+    flap_info = [];
 end
 
 switch lower(xint)
@@ -63,6 +72,20 @@ switch lower(xint)
         x=0.5*(1-cos(pi*linspace(0,1,N)));
     otherwise 
         error('xint must be linear or cos')
+end
+
+if size(flap_info,2) > 0
+   
+    if sum(x==flap_info(1)) > 0 
+       % ho già il punto nel punto giusto
+       [~,imin] = min(abs(x-flap_info(1)));
+    else
+        [~,imin] = min(abs(x-flap_info(1)));
+        if imin == 1 || imin == size(x,2)
+            error('aggiungere punti o modificare flap_info')
+        end
+        x = [x(1:imin-1),flap_info(1),x(imin+1:end)];
+    end
 end
 %% Shape of mean camber
 a0 = 0.2969;
@@ -88,11 +111,58 @@ x_L = (x + yt.*sin(zeta));
 y_U = (yc + yt.*cos(zeta));
 y_L = (yc - yt.*cos(zeta));
 
+
+if size(flap_info,2)>0
+    
+    % porzione "buona"
+    x_Ut = x_U(1:imin);
+    x_Lt = x_L(1:imin);
+    y_Ut = y_U(1:imin);
+    y_Lt = y_L(1:imin);
+        
+    R = [ cosd(-flap_info(2)) -sind(-flap_info(2));...
+          sind(-flap_info(2))  cosd(-flap_info(2))];
+    
+    RU = R*[x_U(imin+1:end)-flap_info(1);...
+        y_U(imin+1:end)];
+    
+    RL = R*[x_L(imin+1:end)-flap_info(1);...
+        y_L(imin+1:end)];
+         
+    
+    jumpO = x(imin) - x(imin-1);
+    jumpL = flap_info(1)+RL(1,1) - x_Lt(end)
+    trim = 0;
+    
+    while jumpL <= 0.5*jumpO
+       trim = trim+1;
+       x_Lt = x_Lt(1:end-trim);
+       y_Lt = y_Lt(1:end-trim);
+       
+       x_Ut = x_Ut(1:end-trim);
+       y_Ut = y_Ut(1:end-trim);
+       
+       jumpL = flap_info(1)+RL(1,1) - x_Lt(end)
+     
+    end
+    
+    x_U = [x_Ut,flap_info(1)+RU(1,:)];
+    y_U = [y_Ut,RU(2,:)];
+    
+    x_L = [x_Lt,flap_info(1)+RL(1,:)];
+    y_L = [y_Lt,RL(2,:)];
+end
+  
 xx=[x_L(end:-1:1),x_U(2:end)];
 yy=[y_L(end:-1:1),y_U(2:end)];
 
+
+
+
+
+
 %% Plot
-if PL == 1
+if PLT == 1
 figure;
 plot(x_U,y_U,'bx-','LineWidth',2); hold on
 plot(x_L,y_L,'bx-','LineWidth',2);

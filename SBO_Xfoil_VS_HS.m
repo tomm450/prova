@@ -58,23 +58,29 @@ fcopt = cell(SBOiter_max,1);
 fc = fcopt;
 ff = fc;
 
+flap_flag    = 1;
+flap_perc    = 0.8; % hinge position (normalized respect to chord)
+flap_deflect = 10;  % deflection degree
+
+str_flap = sprintf('gdes flap %1.2f 0 %d exec', flap_perc, flap_deflect);
 
 for iter_f = 1:SBOiter_max
     fprintf('\n\n\n#####################################################\n');
     % copt
     x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
         14,[],[],[],[],10,20,[],options);
-       
+    
     temp_fig = gcf;
     savefig(temp_fig,strcat('./Output/',num2str(iter_f),'opt.fig'));
     close gcf
     
     
     fc{iter_f}      = pdistr(x(iter_f),U_mag,xp,yp,'all');
-    fcopt{iter_f}  = pdistr(x(iter_f),U_mag,xp,yp,'all',fvals_c,fvals_f,Skf);   
-        
+    fcopt{iter_f}  = pdistr(x(iter_f),U_mag,xp,yp,'all',fvals_c,fvals_f,Skf);
+    
     xc = fc{iter_f}{3};
-    ff{iter_f} = xfoil_distr(x(iter_f),xc,'all',xfoil_cmd,iter_f);
+   
+    ff{iter_f} = xfoil_distr(x(iter_f),xc,'all',xfoil_cmd,iter_f,opt_str,str_flap);
     
     Efc(iter_f,:)    =  ff{iter_f}{2}-fc{iter_f}{2};
     Efcopt(iter_f,:) =  ff{iter_f}{2}-fcopt{iter_f}{2};
@@ -323,13 +329,18 @@ end
 
 end
 
-function f = xfoil_distr(alpha_v,xc,wtd,xfoil_cmd,case_number)
+function f = xfoil_distr(alpha_v,xc,wtd,xfoil_cmd,case_number,opt_str)
 
 if nargin == 4
    case_number = 1;
+   opt_str = [];
 end
-[~,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000,xfoil_cmd);
 
+if size(opt_str,2) == 0
+    [~,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000,xfoil_cmd);
+else
+    [~,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000,xfoil_cmd,opt_str);
+end
 n   = size(xc,2)/2;
 ncp = size(foil.xcp,1)/2;
 
