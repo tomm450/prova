@@ -1,7 +1,9 @@
 %% HS
 function [lfun,A,B,xc,yc,dl,N,T,x,theta_G] = HS_staz(xp,yp,U_inf)
 %questo è giusto
+
 lfun = localfunctions; %restituisce le funzioni locali come globali
+
 if nargout == 1
     return
 end

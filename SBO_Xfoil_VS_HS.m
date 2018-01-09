@@ -5,11 +5,11 @@ close all;
 addpath('./Routines');
 %% Definizione profilo
 
-%xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
-xfoil_cmd = 'xfoil';                               %fisso
+xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
+%xfoil_cmd = 'xfoil';                               %fisso
 
 naca = 'NACA0012';
-n = 160;
+n = 160; % n pannelli 
 [xp,yp] = NACA_generator(naca,n,'cos',0);
 
 % naca = load('64212.mat');
@@ -34,7 +34,7 @@ U_mag   = 135;
 
 iter_number = 5000;
 
-SBOiter_max = 15;
+SBOiter_max = 5;
 
 % Start with the default options
 OPT.nvars = 1;
@@ -52,13 +52,15 @@ fvals_c = {};
 fvals_f = {};
 Skf     = {};
 
-x = nan(1,SBOiter_max);
+x     = nan(1,SBOiter_max);
 fcopt = cell(SBOiter_max,1);
-fc = fcopt;
-ff = fc;
+fc    = cell(SBOiter_max,1);
+ff    = cell(SBOiter_max,1);
 
-
-for iter_f = 1:SBOiter_max
+Merr = 1;
+iter_f = 1;
+%for iter_f = 1:SBOiter_max
+while iter_f < SBOiter_max && Merr > 1e-5
     fprintf('\n\n\n#####################################################\n');
     % copt
     x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
@@ -69,7 +71,7 @@ for iter_f = 1:SBOiter_max
     close gcf
     
     
-    fc{iter_f}      = pdistr(x(iter_f),U_mag,xp,yp,'all');
+    fc{iter_f}     = pdistr(x(iter_f),U_mag,xp,yp,'all');
     fcopt{iter_f}  = pdistr(x(iter_f),U_mag,xp,yp,'all',fvals_c,fvals_f,Skf);   
         
     xc = fc{iter_f}{3};
@@ -80,6 +82,8 @@ for iter_f = 1:SBOiter_max
     
     fprintf('Errore medio F-C    = %f \n',mean(ff{iter_f}{2}-fc{iter_f}{2}));
     fprintf('Errore medio F-Copt = %f \n',mean(ff{iter_f}{2}-fcopt{iter_f}{2}));
+    
+    Merr = mean(ff{iter_f}{2}-fcopt{iter_f}{2});
     
     figure(iter_f);
     
@@ -193,7 +197,7 @@ for iter_f = 1:SBOiter_max
         %         Skh{end}
         
     end
-    
+    iter_f = iter_f +1;
     
 end
 
@@ -279,7 +283,7 @@ U_inf = U_mag*[cos(alpha) sin(alpha)]; % velocità asintotica
 
 [~,~,B,xc,~,~,~,T,x] = HS_staz(xp,yp,U_inf);
 U_inf_t = U_inf*T;
-u_pert = B*x + U_inf_t';
+u_pert  = B*x + U_inf_t';
 
 switch wtd
     case 'distro'
