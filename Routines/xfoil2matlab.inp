@@ -1,0 +1,112 @@
+naca 0012
+
+
+pane
+
+
+oper
+re 9e+06
+mach 0
+iter 5000
+visc
+pacc
+
+
+alfa 0
+dump xfoil2matlab_a00.000_dump.dat
+cpwr xfoil2matlab_a00.000_cpwr.dat
+alfa 1
+dump xfoil2matlab_a01.000_dump.dat
+cpwr xfoil2matlab_a01.000_cpwr.dat
+alfa 2
+dump xfoil2matlab_a02.000_dump.dat
+cpwr xfoil2matlab_a02.000_cpwr.dat
+alfa 3
+dump xfoil2matlab_a03.000_dump.dat
+cpwr xfoil2matlab_a03.000_cpwr.dat
+alfa 4
+dump xfoil2matlab_a04.000_dump.dat
+cpwr xfoil2matlab_a04.000_cpwr.dat
+alfa 5
+dump xfoil2matlab_a05.000_dump.dat
+cpwr xfoil2matlab_a05.000_cpwr.dat
+alfa 6
+dump xfoil2matlab_a06.000_dump.dat
+cpwr xfoil2matlab_a06.000_cpwr.dat
+alfa 7
+dump xfoil2matlab_a07.000_dump.dat
+cpwr xfoil2matlab_a07.000_cpwr.dat
+alfa 8
+dump xfoil2matlab_a08.000_dump.dat
+cpwr xfoil2matlab_a08.000_cpwr.dat
+alfa 9
+dump xfoil2matlab_a09.000_dump.dat
+cpwr xfoil2matlab_a09.000_cpwr.dat
+alfa 10
+dump xfoil2matlab_a10.000_dump.dat
+cpwr xfoil2matlab_a10.000_cpwr.dat
+alfa 11
+dump xfoil2matlab_a11.000_dump.dat
+cpwr xfoil2matlab_a11.000_cpwr.dat
+alfa 12
+dump xfoil2matlab_a12.000_dump.dat
+cpwr xfoil2matlab_a12.000_cpwr.dat
+alfa 13
+dump xfoil2matlab_a13.000_dump.dat
+cpwr xfoil2matlab_a13.000_cpwr.dat
+alfa 14
+dump xfoil2matlab_a14.000_dump.dat
+cpwr xfoil2matlab_a14.000_cpwr.dat
+alfa 15
+dump xfoil2matlab_a15.000_dump.dat
+cpwr xfoil2matlab_a15.000_cpwr.dat
+alfa 16
+dump xfoil2matlab_a16.000_dump.dat
+cpwr xfoil2matlab_a16.000_cpwr.dat
+alfa 17
+dump xfoil2matlab_a17.000_dump.dat
+cpwr xfoil2matlab_a17.000_cpwr.dat
+alfa 18
+dump xfoil2matlab_a18.000_dump.dat
+cpwr xfoil2matlab_a18.000_cpwr.dat
+alfa 19
+dump xfoil2matlab_a19.000_dump.dat
+cpwr xfoil2matlab_a19.000_cpwr.dat
+alfa 20
+dump xfoil2matlab_a20.000_dump.dat
+cpwr xfoil2matlab_a20.000_cpwr.dat
+alfa 21
+dump xfoil2matlab_a21.000_dump.dat
+cpwr xfoil2matlab_a21.000_cpwr.dat
+alfa 22
+dump xfoil2matlab_a22.000_dump.dat
+cpwr xfoil2matlab_a22.000_cpwr.dat
+alfa 23
+dump xfoil2matlab_a23.000_dump.dat
+cpwr xfoil2matlab_a23.000_cpwr.dat
+alfa 24
+dump xfoil2matlab_a24.000_dump.dat
+cpwr xfoil2matlab_a24.000_cpwr.dat
+alfa 25
+dump xfoil2matlab_a25.000_dump.dat
+cpwr xfoil2matlab_a25.000_cpwr.dat
+alfa 26
+dump xfoil2matlab_a26.000_dump.dat
+cpwr xfoil2matlab_a26.000_cpwr.dat
+alfa 27
+dump xfoil2matlab_a27.000_dump.dat
+cpwr xfoil2matlab_a27.000_cpwr.dat
+alfa 28
+dump xfoil2matlab_a28.000_dump.dat
+cpwr xfoil2matlab_a28.000_cpwr.dat
+alfa 29
+dump xfoil2matlab_a29.000_dump.dat
+cpwr xfoil2matlab_a29.000_cpwr.dat
+alfa 30
+dump xfoil2matlab_a30.000_dump.dat
+cpwr xfoil2matlab_a30.000_cpwr.dat
+pwrt
+xfoil2matlab_pwrt.dat
+plis
+
+quit

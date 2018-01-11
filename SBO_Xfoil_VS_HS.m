@@ -4,11 +4,10 @@ close all;
 
 addpath('./Routines');
 %% Definizione profilo
-
-xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
-%xfoil_cmd = 'xfoil';                               %fisso
-
 naca = 'NACA0012';
+global REYNOLDS
+REYNOLDS = 9000000
+
 n = 160; % n pannelli 
 [xp,yp] = NACA_generator(naca,n,'cos',0);
 
@@ -17,7 +16,7 @@ n = 160; % n pannelli
 % xp = naca.air(dummy,1)';
 % yp = naca.air(dummy,2)';
 
-native = load('./nativeNACA0012.txt');
+%native = load('./nativeNACA0012.txt');
 
 % fig1 = figure(1);
 % plot(xp,yp,'bo-');
@@ -34,7 +33,57 @@ U_mag   = 135;
 
 iter_number = 5000;
 
-SBOiter_max = 5;
+xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
+%xfoil_cmd = 'xfoil';                               %fisso
+
+
+%% cose normalmente non note
+alpha_test = [0:30];
+
+% polare Xfoil inv
+[polI,foilI] = xfoil2matlab(naca,alpha_test,0,0,5000,xfoil_cmd);
+polI.Eff = polI.CL./polI.CD;
+% polare Xfoil visc
+[pol,foil] = xfoil2matlab(naca,alpha_test,REYNOLDS,0,5000,xfoil_cmd);
+pol.Eff = pol.CL./pol.CD;
+
+
+for i = 1:size(alpha_test,2)
+   % calcolo deltaP xfoil 
+   pol.DeltaP(i)  = min(foil.cp(:,i))-foil.cp(end,i); 
+   polI.DeltaP(i) = min(foilI.cp(:,i))-foilI.cp(end,i); 
+%    % calcolo polare HS
+%    fprintf('HS alpha = %d deg; \n',alpha_test(i));
+%    f = pdistr(alpha_test(i),U_mag,xp,yp,'all');
+%    hs.CL(i) = f{4}(1);
+%    hs.CD(i) = f{4}(2);
+%    hs.Eff(i) = f{4}(1)/f{4}(2);
+%    hs.DeltaP(i) = f{1};
+   
+end
+
+load('HSdata0012.mat')
+
+
+figure(1234);
+subplot(2,2,1)
+plot(pol.alpha,pol.CL,'b',polI.alpha,polI.CL,'c',pol.alpha,hs.CL,'g')
+title('Cl'); grid on
+subplot(2,2,2)
+plot(pol.alpha,pol.CD,'b',polI.alpha,polI.CD,'c',pol.alpha,hs.CD,'g')
+title('Cd'); grid on
+subplot(2,2,3)
+plot(pol.alpha,pol.Eff,'b',polI.alpha,polI.Eff,'c',pol.alpha,hs.Eff,'g')
+title('Efficieza'); grid on
+axis([-1 30 0 150])
+subplot(2,2,4)
+plot(pol.alpha,abs(pol.DeltaP),'b',polI.alpha,abs(polI.DeltaP),'c',pol.alpha,abs(hs.DeltaP),'g')
+hold on
+plot(pol.alpha,14*ones(size(pol.alpha)),'r--')
+title('deltaP')
+grid on
+
+SBOiter_max = 15;
 
 % Start with the default options
 OPT.nvars = 1;
@@ -60,12 +109,18 @@ ff    = cell(SBOiter_max,1);
 Merr = 1;
 iter_f = 1;
 %for iter_f = 1:SBOiter_max
-while iter_f < SBOiter_max && Merr > 1e-5
+
+while iter_f < SBOiter_max && abs(Merr) > 1e-5
     fprintf('\n\n\n#####################################################\n');
     % copt
-    x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
-        14,[],[],[],[],10,20,[],options);
-       
+    %x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
+    %    14,[],[],[],[],10,20,[],options);
+    
+    x(iter_f) = fmincon(@(x) pdistr(x,U_mag,xp,yp,'cl',fvals_c,fvals_f,Skf)./pdistr(x,U_mag,xp,yp,'cd',fvals_c,fvals_f,Skf),...
+        14,[],[],[],[],0,20,...
+        @(x) deal(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf),0),...
+        options);
+    
     temp_fig = gcf;
     savefig(temp_fig,strcat('./Output/',num2str(iter_f),'opt.fig'));
     close gcf
@@ -281,45 +336,147 @@ end
 alpha = alpha_degr*pi/180; % incidenza profilo
 U_inf = U_mag*[cos(alpha) sin(alpha)]; % velocità asintotica
 
-[~,~,B,xc,~,~,~,T,x] = HS_staz(xp,yp,U_inf);
+[~,~,B,xc,~,dl,~,T,x,theta_G] = HS_staz(xp,yp,U_inf);
 U_inf_t = U_inf*T;
 u_pert  = B*x + U_inf_t';
 
 switch wtd
     case 'distro'
-                       
+        
         f = (1-(u_pert./norm(U_inf)).^2)';
         
         if size(fvals_f,2) > 0
-           f = fvals_f{end}' + Skf{end}*( f' - fvals_c{end}' );    
-           f = f';
+            f = fvals_f{end}' + Skf{end}*( f' - fvals_c{end}' );
+            f = f';
         end
         
-        
     case 'delta'
-    
+        
         cp = (1-(u_pert./norm(U_inf)).^2)';
         
         if size(fvals_f,2) > 0
-           cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );    
-           cp = cp';
+            cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );
+            cp = cp';
         end
         
-        f  = min(cp - cp(1));  
-    
+        f  = min(cp - cp(1));
+        
+    case 'cl'
+        
+        cp = (1-(u_pert./norm(U_inf)).^2)';
+        
+        if size(fvals_f,2) > 0
+            cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );
+            cp = cp';
+        end
+        
+        n = size(xc,2)/2;
+        
+        cp_air  = cp(1:2*n);
+        %cp_slat = cp(2*n+1:end);
+        
+        CD_ref_air = sum(  dl(1,:).*cp_air.*sin(theta_G(1,:)));% + dl(2,:).*cp_slat'.*sin(theta_G(2,:)));
+        CL_ref_air = sum( -dl(1,:).*cp_air.*cos(theta_G(1,:)));% - dl(2,:).*cp_slat'.*cos(theta_G(2,:)));
+        
+        CL = CL_ref_air*cosd(alpha_degr) - CD_ref_air*sind(alpha_degr);
+        %CD = CL_ref_air*sind(alpha_degr) + CD_ref_air*cosd(alpha_degr);
+        
+        if size(CL) ~= [1,1]
+            error('dimensioni CL errate!');
+        end
+        %         if size(CD) ~= [1,1]
+        %             error('dimensioni CD errate!');
+        %         end
+        f = [CL];
+        
+    case 'cd'
+        
+        cp = (1-(u_pert./norm(U_inf)).^2)';
+        
+        if size(fvals_f,2) > 0
+            cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );
+            cp = cp';
+        end
+        
+        n = size(xc,2)/2;
+        
+        cp_air  = cp(1:2*n);
+        %cp_slat = cp(2*n+1:end);
+        
+        CD_ref_air = sum(  dl(1,:).*cp_air.*sin(theta_G(1,:)));% + dl(2,:).*cp_slat'.*sin(theta_G(2,:)));
+        CL_ref_air = sum( -dl(1,:).*cp_air.*cos(theta_G(1,:)));% - dl(2,:).*cp_slat'.*cos(theta_G(2,:)));
+        
+        %CL = CL_ref_air*cosd(alpha_degr) - CD_ref_air*sind(alpha_degr);
+        CD = CL_ref_air*sind(alpha_degr) + CD_ref_air*cosd(alpha_degr);
+        
+        %         if size(CL) ~= [1,1]
+        %             error('dimensioni CL errate!');
+        %         end
+        if size(CD) ~= [1,1]
+            error('dimensioni CD errate!');
+        end
+        f = [CD];
+        
+    case 'coeff'
+        
+        cp = (1-(u_pert./norm(U_inf)).^2)';
+        
+        if size(fvals_f,2) > 0
+            cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );
+            cp = cp';
+        end
+        
+        n = size(xc,2)/2;
+        
+        cp_air  = cp(1:2*n);
+        %cp_slat = cp(2*n+1:end);
+        
+        CD_ref_air = sum(  dl(1,:).*cp_air.*sin(theta_G(1,:)));% + dl(2,:).*cp_slat'.*sin(theta_G(2,:)));
+        CL_ref_air = sum( -dl(1,:).*cp_air.*cos(theta_G(1,:)));% - dl(2,:).*cp_slat'.*cos(theta_G(2,:)));
+        
+        CL = CL_ref_air*cosd(alpha_degr) - CD_ref_air*sind(alpha_degr);
+        CD = CL_ref_air*sind(alpha_degr) + CD_ref_air*cosd(alpha_degr);
+        
+        if size(CL) ~= [1,1]
+            error('dimensioni CL errate!');
+        end
+        if size(CD) ~= [1,1]
+            error('dimensioni CD errate!');
+        end
+        f = [CL,CD];
+        
     case 'all'
         
         cp = (1-(u_pert./norm(U_inf)).^2)';
         
         if size(fvals_f,2) > 0
-           cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );    
-           cp = cp';
+            cp = fvals_f{end}' + Skf{end}*( cp' - fvals_c{end}' );
+            cp = cp';
+        end
+        
+        n = size(xc,2)/2;
+        
+        cp_air  = cp(1:2*n);
+        %cp_slat = cp(2*n+1:end);
+        
+        CD_ref_air = sum(  dl(1,:).*cp_air.*sin(theta_G(1,:)));% + dl(2,:).*cp_slat'.*sin(theta_G(2,:)));
+        CL_ref_air = sum( -dl(1,:).*cp_air.*cos(theta_G(1,:)));% - dl(2,:).*cp_slat'.*cos(theta_G(2,:)));
+        
+        CL = CL_ref_air*cosd(alpha_degr) - CD_ref_air*sind(alpha_degr);
+        CD = CL_ref_air*sind(alpha_degr) + CD_ref_air*cosd(alpha_degr);
+        
+        if size(CL) ~= [1,1]
+            error('dimensioni CL errate!');
+        end
+        if size(CD) ~= [1,1]
+            error('dimensioni CD errate!');
         end
         
         f{1}  = min(cp - cp(1));
         f{2}  = cp;
         f{3}  = xc;
-    
+        f{4} = [CL,CD];
+        
     otherwise
         error('error')
 end
@@ -328,10 +485,15 @@ end
 
 function f = xfoil_distr(alpha_v,xc,wtd,xfoil_cmd,case_number)
 
+global REYNOLDS
+
 if nargin == 4
    case_number = 1;
 end
-[~,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000,xfoil_cmd);
+
+%[pol,foil] = xfoil2matlab('NACA0012',alpha_v,9000000,0,1000,xfoil_cmd);
+[pol,foil] = xfoil2matlab('NACA0012',alpha_v,REYNOLDS,0,1000,xfoil_cmd);
+
 
 n   = size(xc,2)/2;
 ncp = size(foil.xcp,1)/2;
@@ -345,9 +507,12 @@ switch wtd
         f = foil.cpI;
     case 'delta'
         f = min(foil.cpI - foil.cpI(1));
+    case 'coeff'
+        f = [pol.CL,pol.CD];
     case 'all'
         f{1}  = min(foil.cpI - foil.cpI(1));
         f{2}  = foil.cpI;
+        f{3}  = [pol.CL,pol.CD];
     otherwise
         error('error')
 end
