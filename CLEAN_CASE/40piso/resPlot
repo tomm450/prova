@@ -1,0 +1,47 @@
+pause 3
+
+set term x11 0
+set logscale y
+set title "Residuals"
+set ylabel 'Residual'
+set xlabel 'Iteration'
+plot "< cat ../4logFoam.txt | grep 'Solving for Ux'    | cut -d' ' -f9 | tr -d ','" title 'Ux' with lines,\
+     "< cat ../4logFoam.txt | grep 'Solving for Uz'    | cut -d' ' -f9 | tr -d ','" title 'Uz' with lines,\
+     "< cat ../4logFoam.txt | grep 'Solving for omega' | cut -d' ' -f9 | tr -d ','" title 'omega' with lines,\
+     "< cat ../4logFoam.txt | grep 'Solving for k' | cut -d' ' -f9 | tr -d ','" title 'k' with lines,\
+     "< cat ../4logFoam.txt | grep 'Solving for p'     | cut -d' ' -f9 | sed -n 'p;N' | tr -d ','" title 'p' with lines
+
+unset logscale y
+
+pause 3
+
+set term x11 1
+set title "Co"
+set ylabel 'Co'
+set xlabel 'Iteration'
+plot "< cat ../4logFoam.txt | grep 'Courant' | cut -d' ' -f4" title 'meanCo' with lines,\
+     "< cat ../4logFoam.txt | grep 'Courant' | cut -d' ' -f6" title 'maxCo' with lines
+
+pause 3
+
+set term x11 2
+set title "Coeff"
+set ylabel '-'
+set xlabel 'Iteration'
+set yrange [0:2] 
+plot "< cat ../4logFoam.txt | grep 'Cl    ' | cut -d' ' -f10" title 'Cl' with lines,\
+     "< cat ../4logFoam.txt | grep 'Cd    ' | cut -d' ' -f10" title 'Cd' with lines,\
+     "< cat ../4logFoam.txt | grep 'Cm    ' | cut -d' ' -f10" title 'Cm' with lines
+unset yrange
+
+pause 3
+set term x11 3
+set title "Time"
+set ylabel '-'
+set xlabel 'Iteration'
+plot "< cat ../4logFoam.txt | grep 'Time =' | cut -d ' ' -f3 | sed 'n; d'" title 'Time computed' with lines,
+
+
+
+reread
+

@@ -5,15 +5,16 @@ pane
 
 
 oper
-re 0
+re 9e+06
 mach 0
 iter 1000
+visc
 pacc
 
 
-alfa 5
-dump xfoil2matlab_a05.000_dump.dat
-cpwr xfoil2matlab_a05.000_cpwr.dat
+alfa 11.371
+dump xfoil2matlab_a11.371_dump.dat
+cpwr xfoil2matlab_a11.371_cpwr.dat
 pwrt
 xfoil2matlab_pwrt.dat
 plis

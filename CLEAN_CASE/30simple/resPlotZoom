@@ -1,0 +1,48 @@
+pause 5
+
+set term x11 0
+set logscale y
+set title "Residuals"
+set ylabel 'Residual'
+set xlabel 'Iteration'
+plot "< cat ../3logFoam.txt | grep 'Solving for Ux'    | cut -d' ' -f9 | tr -d ',' | tail -n 100 " title 'Ux' with lines,\
+     "< cat ../3logFoam.txt | grep 'Solving for Uz'    | cut -d' ' -f9 | tr -d ',' | tail -n 100 " title 'Uz' with lines,\
+     "< cat ../3logFoam.txt | grep 'Solving for omega' | cut -d' ' -f9 | tr -d ','| tail -n 100 " title 'omega' with lines,\
+     "< cat ../3logFoam.txt | grep 'Solving for k' | cut -d' ' -f9 | tr -d ','| tail -n 100 " title 'k' with lines,\
+     "< cat ../3logFoam.txt | grep 'Solving for p'     | cut -d' ' -f9 | sed -n 'p;N' | tr -d ','| tail -n 100 " title 'p' with lines
+
+unset logscale y
+     
+set term x11 2
+set title "Cl"
+set ylabel '-'
+set xlabel 'Iteration'
+ 
+plot "< cat ../3logFoam.txt | grep 'Cl    ' | cut -d' ' -f10| tail -n 100 " title 'Cl' with lines,\
+     #"< cat ../3logFoam.txt | grep 'Cd    ' | cut -d' ' -f10| tail -n 100 " title 'Cd' with lines,\
+     #"< cat ../3logFoam.txt | grep 'Cm    ' | cut -d' ' -f10| tail -n 100 " title 'Cm' with lines
+
+
+set term x11 3
+set title "Cd"
+set ylabel '-'
+set xlabel 'Iteration'
+ 
+plot "< cat ../3logFoam.txt | grep 'Cd    ' | cut -d' ' -f10| tail -n 100 " title 'Cd' with lines,\
+     #"< cat ../3logFoam.txt | grep 'Cd    ' | cut -d' ' -f10| tail -n 100 " title 'Cd' with lines,\
+     #"< cat ../3logFoam.txt | grep 'Cm    ' | cut -d' ' -f10| tail -n 100 " title 'Cm' with lines
+
+set term x11 4
+set title "Cm"
+set ylabel '-'
+set xlabel 'Iteration'
+ 
+plot "< cat ../3logFoam.txt | grep 'Cm    ' | cut -d' ' -f10| tail -n 100 " title 'Cm' with lines,\
+    # "< cat ../3logFoam.txt | grep 'Cd    ' | cut -d' ' -f10| tail -n 100 " title 'Cd' with lines,\
+    # "< cat ../3logFoam.txt | grep 'Cm    ' | cut -d' ' -f10| tail -n 100 " title 'Cm' with lines
+
+
+
+pause 5
+reread
+
