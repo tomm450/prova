@@ -33,8 +33,8 @@ U_mag   = 135;
 
 iter_number = 5000;
 
-%xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
-xfoil_cmd = 'xfoil';                               %fisso
+xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
+%xfoil_cmd = 'xfoil';                               %fisso
 
 
 %% cose normalmente non note
@@ -65,7 +65,7 @@ alpha_test = [0:30];
 load('HSdata0012.mat')
 load('FOILdata0012.mat')
 
-[emax,iemax] = max(pol.Eff);
+[CLmax,iCL] = max(pol.CL);
 
 f1 = figure(1234);
 
@@ -91,14 +91,14 @@ title('Efficieza'); grid on
 subplot(2,2,4)
 plot(pol.alpha,abs(pol.DeltaP),'b',polI.alpha,abs(polI.DeltaP),'c',pol.alpha,abs(hs.DeltaP),'r');
 hold on
-plot(pol.alpha(iemax),abs(pol.DeltaP(iemax)),'bo',...
-     polI.alpha(iemax),abs(polI.DeltaP(iemax)),'co',...
-     pol.alpha(iemax),abs(hs.DeltaP(iemax)),'ro')
+plot(pol.alpha(iCL),abs(pol.DeltaP(iCL)),'bo',...
+     polI.alpha(iCL),abs(polI.DeltaP(iCL)),'co',...
+     pol.alpha(iCL),abs(hs.DeltaP(iCL)),'ro')
 hold on
 legend('Xfoil','Xfoil inv','HS',...
-    sprintf('Xfoil|_{max eff}     = %2.3f',abs(pol.DeltaP(iemax))),...
-    sprintf('Xfoil inv|_{max eff} = %2.3f',abs(polI.DeltaP(iemax))),...
-    sprintf('HS|_{max eff}        = %2.3f',abs(hs.DeltaP(iemax))),'Location','best')
+    sprintf('Xfoil|_{maxCl}     = %2.3f',abs(pol.DeltaP(iCL))),...
+    sprintf('Xfoil inv|_{maxCl} = %2.3f',abs(polI.DeltaP(iCL))),...
+    sprintf('HS|_{maxCl}        = %2.3f',abs(hs.DeltaP(iCL))),'Location','best')
 plot(pol.alpha,14*ones(size(pol.alpha)),'m--')
 set(f1,'Position',[10 10 1200 700])
 title('abs(deltaP)')
@@ -139,8 +139,8 @@ while iter_f-1 < SBOiter_max && abs(Merr) > 1e-5
     %x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
     %    14,[],[],[],[],10,20,[],options);
     
-    fitness = @(x) -pdistr(x,U_mag,xp,yp,'cl',fvals_c,fvals_f,Skf)...
-                  ./pdistr(x,U_mag,xp,yp,'cd',fvals_c,fvals_f,Skf);
+    fitness = @(x) -pdistr(x,U_mag,xp,yp,'cl',fvals_c,fvals_f,Skf);%...
+%                  ./pdistr(x,U_mag,xp,yp,'cd',fvals_c,fvals_f,Skf);
                   
     nonlinearcostr = @(x) deal(-14-pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf),0); 
     
