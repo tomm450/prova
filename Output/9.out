@@ -1,0 +1,241 @@
+
+ ===================================================
+  XFOIL Version 6.99
+  Copyright (C) 2000   Mark Drela, Harold Youngren
+
+  This software comes with ABSOLUTELY NO WARRANTY,
+    subject to the GNU General Public License.
+
+  Caveat computor
+ ===================================================
+
+ File  xfoil.def  not found
+
+   QUIT    Exit program
+
+  .OPER    Direct operating point(s)
+  .MDES    Complex mapping design routine
+  .QDES    Surface speed design routine
+  .GDES    Geometry design routine
+
+   SAVE f  Write airfoil to labeled coordinate file
+   PSAV f  Write airfoil to plain coordinate file
+   ISAV f  Write airfoil to ISES coordinate file
+   MSAV f  Write airfoil to MSES coordinate file
+   REVE    Reverse written-airfoil node ordering
+   DELI i  Change written-airfoil file delimiters
+
+   LOAD f  Read buffer airfoil from coordinate file
+   NACA i  Set NACA 4,5-digit airfoil and buffer airfoil
+   INTE    Set buffer airfoil by interpolating two airfoils
+   NORM    Buffer airfoil normalization toggle
+   HALF    Halve the number of points in buffer airfoil
+   XYCM rr Change CM reference location, currently  0.25000 0.00000
+
+   BEND    Display structural properties of current airfoil
+
+   PCOP    Set current-airfoil panel nodes directly from buffer airfoil points
+   PANE    Set current-airfoil panel nodes ( 160 ) based on curvature
+  .PPAR    Show/change paneling
+
+  .PLOP    Plotting options
+
+   WDEF f  Write  current-settings file
+   RDEF f  Reread current-settings file
+   NAME s  Specify new airfoil name
+   NINC    Increment name version number
+
+   Z       Zoom    | (available in all menus)
+   U       Unzoom  | 
+
+ XFOIL   c>   Max thickness =     0.120032  at x =   0.297
+ Max camber    =    -0.000000  at x =   0.018
+
+ Buffer airfoil set using 245 points
+
+ Blunt trailing edge.  Gap =  0.00252
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+ Blunt trailing edge.  Gap =  0.00252
+
+ Paneling parameters used...
+   Number of panel nodes       160
+   Panel bunching parameter    1.000
+   TE/LE panel density ratio   0.150
+   Refined-area/LE panel density ratio    0.200
+   Top    side refined area x/c limits  1.000 1.000
+   Bottom side refined area x/c limits  1.000 1.000
+
+ XFOIL   c>  
+ XFOIL   c>  
+ XFOIL   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+.OPERi   c>  
+ M  =    0.0000
+ Re =  0.9000E+07
+
+.OPERv   c>  
+ Polar  1 newly created for accumulation
+ Airfoil archived with polar: NACA 0012                                       
+
+Enter  polar save filename  OR  <return> for no file   s>  
+ Polar save file will NOT be written
+
+Enter  polar dump filename  OR  <return> for no file   s>  
+ Polar dump file will NOT be written
+
+ Polar accumulation enabled
+
+.OPERva   c>   Calculating unit vorticity distributions ...
+ Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Initializing BL ...
+    side            1  ...
+ MRCHUE: Inverse mode at  29     Hk =   7.798
+ MRCHUE: Inverse mode at  30     Hk =   2.500
+ MRCHUE: Inverse mode at  95     Hk =   2.500
+ MRCHUE: Inverse mode at  96     Hk =   2.500
+ MRCHUE: Inverse mode at  97     Hk =   2.500
+ MRCHUE: Inverse mode at  98     Hk =   2.500
+ MRCHUE: Inverse mode at  99     Hk =   2.500
+ MRCHUE: Inverse mode at 100     Hk =   2.500
+ MRCHUE: Inverse mode at 101     Hk =   2.500
+ MRCHUE: Inverse mode at 102     Hk =   2.500
+ MRCHUE: Convergence failed at 103  side 1    Res =  0.1002E+02
+    side            2  ...
+ MRCHUE: Inverse mode at  58     Hk =   5.257
+ MRCHUE: Inverse mode at  59     Hk =   6.560
+
+ MRCHDU: Convergence failed at 103  side 1    Res =  0.8609E+01
+ Side 1  free  transition at x/c =  0.0043   30
+ Side 2 forced transition at x/c =  1.0000   59
+
+   1   rms: 0.7174E+00   max: -.7870E+01   D at   59  2   RLX: 0.064
+       a = 17.983      CL =  2.1244
+      Cm = -0.0309     CD =  0.00786   =>   CDf =  0.00425    CDp =  0.00360
+
+ Side 1  free  transition at x/c =  0.0044   30
+ Side 2 forced transition at x/c =  1.0000   59
+
+   2   rms: 0.4574E+00   max: -.6928E+01   C at   59  2   RLX: 0.072
+       a = 17.983      CL =  2.1100
+      Cm = -0.0282     CD =  0.00847   =>   CDf =  0.00426    CDp =  0.00422
+
+ Side 1  free  transition at x/c =  0.0044   30
+ Side 2 forced transition at x/c =  1.0000   59
+
+   3   rms: 0.3525E+00   max: -.3773E+01   C at   59  2   RLX: 0.133
+       a = 17.983      CL =  2.0896
+      Cm = -0.0247     CD =  0.00957   =>   CDf =  0.00460    CDp =  0.00497
+
+ Side 1  free  transition at x/c =  0.0045   29
+ Side 2 forced transition at x/c =  1.0000   60
+
+   4   rms: 0.2931E+00   max: -.2241E+01   C at   60  2   RLX: 0.223
+       a = 17.983      CL =  2.0570
+      Cm = -0.0191     CD =  0.01135   =>   CDf =  0.00427    CDp =  0.00708
+
+ Side 1  free  transition at x/c =  0.0048   29
+ Side 2 forced transition at x/c =  1.0000   60
+
+   5   rms: 0.2206E+00   max: -.1100E+01   C at   60  2   RLX: 0.455
+       a = 17.983      CL =  1.9913
+      Cm = -0.0079     CD =  0.01469   =>   CDf =  0.00428    CDp =  0.01042
+
+ Side 1  free  transition at x/c =  0.0052   30
+ Side 2 forced transition at x/c =  1.0000   60
+
+   6   rms: 0.1347E+00   max: 0.4652E+00   D at   69  2
+       a = 17.983      CL =  1.8672
+      Cm =  0.0149     CD =  0.01940   =>   CDf =  0.00425    CDp =  0.01515
+
+ MRCHDU: Convergence failed at  31  side 1    Res =  0.7969E+00
+ Side 1  free  transition at x/c =  0.0094   32
+ Side 2 forced transition at x/c =  1.0000   60
+
+   7   rms: 0.1681E+00   max: -.2946E+01   D at   32  1   RLX: 0.170
+       a = 17.983      CL =  1.8666
+      Cm =  0.0182     CD =  0.01967   =>   CDf =  0.00406    CDp =  0.01561
+
+ Side 1  free  transition at x/c =  0.0088   31
+ Side 2 forced transition at x/c =  1.0000   60
+
+   8   rms: 0.7654E-01   max: -.4730E+00   D at   32  1   RLX: 0.946
+       a = 17.983      CL =  1.8215
+      Cm =  0.0234     CD =  0.02015   =>   CDf =  0.00406    CDp =  0.01608
+
+ Side 1  free  transition at x/c =  0.0067   30
+ Side 2 forced transition at x/c =  1.0000   60
+
+   9   rms: 0.2248E-01   max: -.3063E+00   C at   30  1
+       a = 17.983      CL =  1.8110
+      Cm =  0.0240     CD =  0.02094   =>   CDf =  0.00436    CDp =  0.01658
+
+ Side 1  free  transition at x/c =  0.0066   29
+ Side 2 forced transition at x/c =  1.0000   61
+
+  10   rms: 0.2223E-01   max: -.3830E+00   T at    2  2
+       a = 17.983      CL =  1.8092
+      Cm =  0.0242     CD =  0.02106   =>   CDf =  0.00405    CDp =  0.01700
+
+ Side 1  free  transition at x/c =  0.0065   29
+ Side 2 forced transition at x/c =  1.0000   61
+
+  11   rms: 0.2321E-03   max: 0.2626E-02   D at   95  1
+       a = 17.983      CL =  1.8092
+      Cm =  0.0242     CD =  0.02106   =>   CDf =  0.00405    CDp =  0.01701
+
+ Side 1  free  transition at x/c =  0.0065   29
+ Side 2 forced transition at x/c =  1.0000   61
+
+  12   rms: 0.4375E-05   max: 0.3852E-04   D at   95  1
+       a = 17.983      CL =  1.8092
+      Cm =  0.0242     CD =  0.02106   =>   CDf =  0.00405    CDp =  0.01701
+      9.000    4.4050   0.021058   0.018761   0.000550  -0.018211    0.0065     #
+
+ Point added to stored polar  1
+ Save file unspecified or not available
+ Dump file unspecified or not available
+
+.OPERva   c>  
+.OPERva   c>  
+.OPERva   c>  
+        airfoil                    Re           Mach       NcritT  NcritB  XtripT  XtripB       file
+       ------------------------  ------------  ----------  ------  ------  ------  ------    -------------------
+ >  1  NACA 0012                 9.000e6       0.000         9.00    9.00   1.000   1.000    
+
+Enter polar output filename   s>  
+.OPERva   c>  
+ ==============================================================
+ Polar  1
+  
+       XFOIL         Version 6.99
+  
+ Calculated polar for: NACA 0012                                       
+  
+ 1 1 Reynolds number fixed          Mach number fixed         
+  
+ xtrf =   1.000 (top)        1.000 (bottom)  
+ Mach =   0.000     Re =     9.000 e 6     Ncrit =   9.000  9.000
+  
+   alpha    CL        CD       CDp       CM     Top_Xtr  Bot_Xtr  Top_Itr  Bot_Itr
+  ------ -------- --------- --------- -------- -------- -------- -------- --------
+  17.983   1.8092   0.02106   0.00977   0.0242   0.0065   1.0000  73.1584 160.0000
+
+.OPERva   c>  
+ XFOIL   c>  

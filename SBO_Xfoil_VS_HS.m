@@ -65,7 +65,12 @@ alpha_test = [0:30];
 load('HSdata0012.mat')
 load('FOILdata0012.mat')
 
-[CLmax,iCL] = max(pol.CL);
+   pol.TO  = -(pol.CL.^3)./(pol.CD.^2); 
+   polI.TO = -(polI.CL.^3)./(polI.CD.^2); 
+   hs.TO   = -(hs.CL.^3)./(hs.CD.^2);
+
+
+[TOmax,iTO] = max(pol.TO);
 
 f1 = figure(1234);
 
@@ -91,14 +96,14 @@ title('Efficieza'); grid on
 subplot(2,2,4)
 plot(pol.alpha,abs(pol.DeltaP),'b',polI.alpha,abs(polI.DeltaP),'c',pol.alpha,abs(hs.DeltaP),'r');
 hold on
-plot(pol.alpha(iCL),abs(pol.DeltaP(iCL)),'bo',...
-     polI.alpha(iCL),abs(polI.DeltaP(iCL)),'co',...
-     pol.alpha(iCL),abs(hs.DeltaP(iCL)),'ro')
+plot(pol.alpha(iTO),abs(pol.DeltaP(iTO)),'bo',...
+     polI.alpha(iTO),abs(polI.DeltaP(iTO)),'co',...
+     pol.alpha(iTO),abs(hs.DeltaP(iTO)),'ro')
 hold on
 legend('Xfoil','Xfoil inv','HS',...
-    sprintf('Xfoil|_{maxCl}     = %2.3f',abs(pol.DeltaP(iCL))),...
-    sprintf('Xfoil inv|_{maxCl} = %2.3f',abs(polI.DeltaP(iCL))),...
-    sprintf('HS|_{maxCl}        = %2.3f',abs(hs.DeltaP(iCL))),'Location','best')
+    sprintf('Xfoil|_{maxTO}     = %2.3f',abs(pol.DeltaP(iTO))),...
+    sprintf('Xfoil inv|_{maxTO} = %2.3f',abs(polI.DeltaP(iTO))),...
+    sprintf('HS|_{maxTO}        = %2.3f',abs(hs.DeltaP(iTO))),'Location','best')
 plot(pol.alpha,14*ones(size(pol.alpha)),'m--')
 set(f1,'Position',[10 10 1200 700])
 title('abs(deltaP)')
@@ -139,8 +144,8 @@ while iter_f-1 < SBOiter_max && abs(Merr) > 1e-5
     %x(iter_f) = fmincon(@(x) norm(14+pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf)),...
     %    14,[],[],[],[],10,20,[],options);
     
-    fitness = @(x) -pdistr(x,U_mag,xp,yp,'cl',fvals_c,fvals_f,Skf);%...
-%                  ./pdistr(x,U_mag,xp,yp,'cd',fvals_c,fvals_f,Skf);
+    fitness = @(x) -(pdistr(x,U_mag,xp,yp,'cl',fvals_c,fvals_f,Skf).^3)./...
+                    (pdistr(x,U_mag,xp,yp,'cd',fvals_c,fvals_f,Skf).^2);
                   
     nonlinearcostr = @(x) deal(-14-pdistr(x,U_mag,xp,yp,'delta',fvals_c,fvals_f,Skf),0); 
     

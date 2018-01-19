@@ -12,9 +12,9 @@ visc
 pacc
 
 
-alfa 16.3952
-dump xfoil2matlab_a16.395_dump.dat
-cpwr xfoil2matlab_a16.395_cpwr.dat
+alfa 19.9997
+dump xfoil2matlab_a20.000_dump.dat
+cpwr xfoil2matlab_a20.000_cpwr.dat
 pwrt
 xfoil2matlab_pwrt.dat
 plis
