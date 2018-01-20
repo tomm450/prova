@@ -405,7 +405,7 @@ xlabel('Iteration');
 ylabel('Alpha [deg]');
 savefig(f101,'./Output/alpha_conv.fig');
 
-save('maxEff.mat');
+save('maxTO.mat');
 dummy = 22
 
 
