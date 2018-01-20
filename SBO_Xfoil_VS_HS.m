@@ -4,11 +4,12 @@ close all;
 
 addpath('./Routines');
 %% Definizione profilo
+
 naca = 'NACA0012';
 global REYNOLDS
 REYNOLDS = 9000000
 
-n = 160; % n pannelli 
+n = 160; % n pannelli HS 
 [xp,yp] = NACA_generator(naca,n,'cos',0);
 
 % naca = load('64212.mat');
