@@ -1,0 +1,22 @@
+naca 0012
+
+
+pane
+
+
+oper
+re 9e+06
+mach 0
+iter 1000
+visc
+pacc
+
+
+alfa 9.8263
+dump xfoil2matlab_a09.826_dump.dat
+cpwr xfoil2matlab_a09.826_cpwr.dat
+pwrt
+xfoil2matlab_pwrt.dat
+plis
+
+quit

@@ -1,5 +1,0 @@
-Output è la cartella dove vengono salvati tutti i risultati,
-ogni iterazione vengono salvati:
-- i file di Xfoil (input e output)
-- grafici di confronto delle distribuzioni di pressione
-- file .mat contente tutte le variabili del workspace

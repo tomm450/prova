@@ -33,8 +33,8 @@ U_mag   = 135;
 
 iter_number = 5000;
 
-%xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
-xfoil_cmd = 'xfoil';                               %fisso
+xfoil_cmd = '/home/tom/Downloads/Xfoil/bin/xfoil'; %portatile
+%xfoil_cmd = 'xfoil';                               %fisso
 
 
 %% cose normalmente non note
@@ -180,7 +180,7 @@ while iter_f-1 < SBOiter_max && abs(Merr) > 1e-5
 
         % calcolo polare HS
         fprintf('HS double check alpha = %d deg; (caso %d/%d)\n',alpha_double_check(i),i,size(alpha_double_check,2));
-        f = pdistr(alpha_test(i),U_mag,xp,yp,'all',fvals_c,fvals_f,Skf);
+        f = pdistr(alpha_double_check(i),U_mag,xp,yp,'all',fvals_c,fvals_f,Skf);
         double_check.CL{iter_f}(i) = f{4}(1);
         double_check.CD{iter_f}(i) = f{4}(2);
         double_check.Eff{iter_f}(i) = f{4}(1)/f{4}(2);
@@ -188,7 +188,6 @@ while iter_f-1 < SBOiter_max && abs(Merr) > 1e-5
         
     end
     double_check.alpha{iter_f}  = alpha_double_check;
-    
     
   
     
@@ -401,6 +400,7 @@ ylabel('Alpha [deg]');
 savefig(f101,'./Output/alpha_conv.fig');
 
 save('maxEff.mat');
+system('sudo shutdown -h now');
 dummy = 22
 
 

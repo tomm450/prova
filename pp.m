@@ -1,5 +1,6 @@
 clean
 load('maxEff.mat');
+load('doubleCheck.mat' );
 
 i_max = max(size(x));
 while isnan(x(i_max))    
@@ -26,14 +27,14 @@ for i = 2:i_max
     % caso i-1
     %alpha_double_check = 2*linspace(floor(x(i-1)/2),ceil(x(i-1)/2),6);
     hold on        
-    plot(alpha_test,surPol.Eff{i-1},'bx--',...
+    plot(alpha_test(1:21),surPol.Eff{i-1}(1:21),'bx--',...
          x(i-1),Ehs_c(i-1),'bo');
          %        alpha_double_check,double_check.Eff{i-1},'bs--',...
     hold on
     
     % caso i 
     %alpha_double_check = 2*linspace(floor(x(i)/2),ceil(x(i)/2),6);
-    plot(alpha_test,surPol.Eff{i},'rx--',...
+    plot(alpha_test(1:21),surPol.Eff{i}(1:21),'rx--',...
         x(i),Ehs_c(i),'ro')
     %        alpha_double_check,double_check.Eff{i},'rs--',...
     grid on
@@ -45,7 +46,9 @@ for i = 2:i_max
        
     plot(x_ms(i-1,:),-f_ms(i-1,:),'bs');
     plot(x_ms(i,:),  -f_ms(i,:)  ,'rs');
-    
+%     
+%     plot(double_check2.alpha{i-1}{1},double_check2.CL{i-1}./double_check2.CD{i-1},'bo');
+%     plot(double_check2.alpha{i}{1},  double_check2.CL{i}./double_check2.CD{i},'ro');
 end
 
 
